@@ -6,5 +6,3 @@ This project is a **Security Data Science prototype** written in Python that aut
 - **SoD Matrix Audit:** Joins and evaluates user-role-transaction mappings against a predefined risk matrix using `pandas`.
 - **Anomaly Detection:** Uses `scikit-learn` (Isolation Forest) to isolate outlier user profiles with excessive access.
 - **Audit Reporting:** Exporting structured conflict logs and summary metrics for GRC/Cyber Risk teams.
-
-Created as part of a Security Data Science exploration.
