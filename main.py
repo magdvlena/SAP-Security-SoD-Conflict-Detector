@@ -1,46 +1,14 @@
 import pandas as pd
 
 
-def get_sod_matrix() -> pd.DataFrame:
-    # Define standard SAP SoD risk rules
-    sod_data = [
-        {
-            "risk_id": "SOD_01",
-            "tcode_a": "FK01",
-            "tcode_b": "PAY01",
-            "risk_level": "CRITICAL",
-            "description": "Vendor creation and payment execution by same user",
-        },
-        {
-            "risk_id": "SOD_02",
-            "tcode_a": "FB01",
-            "tcode_b": "PAY01",
-            "risk_level": "HIGH",
-            "description": "GL posting and payment execution by same user",
-        },
-        {
-            "risk_id": "SOD_03",
-            "tcode_a": "ME21N",
-            "tcode_b": "MIRO",
-            "risk_level": "MEDIUM",
-            "description": "PO creation and Invoice verification by same user",
-        },
-    ]
-    return pd.DataFrame(sod_data)
+def load_sod_matrix(file_path: str = "sod_matrix.csv") -> pd.DataFrame:
+    # Load SoD risk matrix from CSV file
+    return pd.read_csv(file_path)
 
 
-def get_user_roles() -> pd.DataFrame:
-    # Dummy user access data for testing
-    user_roles_data = [
-        {"user_id": "U001", "tcode": "FK01", "role_name": "Vendor_Admin"},
-        {"user_id": "U001", "tcode": "PAY01", "role_name": "Payment_Clerk"},
-        {"user_id": "U002", "tcode": "FB01", "role_name": "GL_Accountant"},
-        {"user_id": "U002", "tcode": "PAY01", "role_name": "Payment_Clerk"},
-        {"user_id": "U003", "tcode": "ME21N", "role_name": "Purchaser"},
-        {"user_id": "U003", "tcode": "MIRO", "role_name": "AP_Clerk"},
-        {"user_id": "U004", "tcode": "FK01", "role_name": "Vendor_Admin"},
-    ]
-    return pd.DataFrame(user_roles_data)
+def load_user_roles(file_path: str = "user_roles.csv") -> pd.DataFrame:
+    # Load user authorizations from CSV file
+    return pd.read_csv(file_path)
 
 
 def detect_sod_conflicts(
@@ -73,10 +41,10 @@ def detect_sod_conflicts(
 
 
 def main():
-    print("Starting SoD analysis...")
+    print("Starting SoD analysis from CSV files...")
 
-    df_sod = get_sod_matrix()
-    df_roles = get_user_roles()
+    df_sod = load_sod_matrix()
+    df_roles = load_user_roles()
     df_conflicts = detect_sod_conflicts(df_roles, df_sod)
 
     output_file = "sod_analysis_report.xlsx"
