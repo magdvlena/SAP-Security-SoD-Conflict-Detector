@@ -1,0 +1,4 @@
+risk_id,tcode_a,tcode_b,risk_level,description
+SOD_01,FK01,PAY01,CRITICAL,Vendor creation and payment execution by same user
+SOD_02,FB01,PAY01,HIGH,GL posting and payment execution by same user
+SOD_03,ME21N,MIRO,MEDIUM,PO creation and Invoice verification by same user

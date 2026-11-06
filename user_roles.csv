@@ -1,0 +1,8 @@
+user_id,tcode,role_name
+U001,FK01,Vendor_Admin
+U001,PAY01,Payment_Clerk
+U002,FB01,GL_Accountant
+U002,PAY01,Payment_Clerk
+U003,ME21N,Purchaser
+U003,MIRO,AP_Clerk
+U004,FK01,Vendor_Admin
