@@ -1,28 +1,6 @@
-import pandas as pd
 from pathlib import Path
+import pandas as pd
 
-def main():
-    print("Starting SoD analysis...")
-
-    df_sod = load_sod_matrix()
-    df_roles = load_user_roles()
-    df_conflicts = detect_sod_conflicts(df_roles, df_sod)
-
-    # Ensure output directory exists
-    output_dir = Path("output")
-    output_dir.mkdir(exist_ok=True)
-    output_file = output_dir / "sod_analysis_report.xlsx"
-
-    with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
-        df_roles.to_excel(writer, sheet_name="User Authorizations", index=False)
-        df_conflicts.to_excel(
-            writer, sheet_name="SoD Conflicts Report", index=False
-        )
-
-    print(
-        f"Done. Found {len(df_conflicts)} conflicts. Saved report to"
-        f" {output_file}"
-    )
 
 def load_sod_matrix(file_path: str = "sod_matrix.csv") -> pd.DataFrame:
     df = pd.read_csv(file_path, dtype=str)
@@ -59,10 +37,12 @@ def load_user_roles(file_path: str = "user_roles.csv") -> pd.DataFrame:
     df["role_name"] = df["role_name"].str.strip()
 
     return df.drop_duplicates()
+
+
 def detect_sod_conflicts(
     df_user_roles: pd.DataFrame, df_sod: pd.DataFrame
 ) -> pd.DataFrame:
-    # Match user roles against tcode_a of risk matrix
+    # 1. Dopasowujemy transakcję A użytkownika z tcode_a z macierzy
     matched_a = pd.merge(
         df_user_roles,
         df_sod,
@@ -71,7 +51,10 @@ def detect_sod_conflicts(
         how="inner",
     )
 
-    # Match user roles against tcode_b for the same user
+    # 2. Usunięcie zbędnej kolumny 'tcode', zapobiegające błędowi MergeError
+    matched_a = matched_a.drop(columns=["tcode"])
+
+    # 3. Dopasowujemy transakcję B dla tego samego użytkownika z tcode_b z macierzy
     matched_b = pd.merge(
         matched_a,
         df_user_roles,
@@ -115,7 +98,19 @@ def generate_summary(df_conflicts: pd.DataFrame) -> pd.DataFrame:
 
     return pd.concat([total_conflicts, affected_users, by_risk], ignore_index=True)
 
-df_summary = generate_summary(df_conflicts)
+
+def main():
+    print("Starting SoD analysis...")
+
+    df_sod = load_sod_matrix()
+    df_roles = load_user_roles()
+    df_conflicts = detect_sod_conflicts(df_roles, df_sod)
+    df_summary = generate_summary(df_conflicts)
+
+    # Automatyczne utworzenie katalogu output
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
+    output_file = output_dir / "sod_analysis_report.xlsx"
 
     with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
         df_summary.to_excel(writer, sheet_name="Summary", index=False)
@@ -123,3 +118,12 @@ df_summary = generate_summary(df_conflicts)
         df_conflicts.to_excel(
             writer, sheet_name="SoD Conflicts Report", index=False
         )
+
+    print(
+        f"Done. Found {len(df_conflicts)} conflicts. Saved report to"
+        f" {output_file}"
+    )
+
+
+if __name__ == "__main__":
+    main()
