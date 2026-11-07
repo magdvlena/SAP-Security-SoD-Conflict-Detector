@@ -1,3 +1,4 @@
+import pandas as pd
 from pathlib import Path
 
 def main():
@@ -58,3 +59,58 @@ def load_user_roles(file_path: str = "user_roles.csv") -> pd.DataFrame:
     df["role_name"] = df["role_name"].str.strip()
 
     return df.drop_duplicates()
+def detect_sod_conflicts(
+    df_user_roles: pd.DataFrame, df_sod: pd.DataFrame
+) -> pd.DataFrame:
+    # Match user roles against tcode_a of risk matrix
+    matched_a = pd.merge(
+        df_user_roles,
+        df_sod,
+        left_on="tcode",
+        right_on="tcode_a",
+        how="inner",
+    )
+
+    # Match user roles against tcode_b for the same user
+    matched_b = pd.merge(
+        matched_a,
+        df_user_roles,
+        left_on=["user_id", "tcode_b"],
+        right_on=["user_id", "tcode"],
+        suffixes=("_a", "_b"),
+        how="inner",
+    )
+
+    df_conflicts = matched_b[matched_b["tcode_a"] != matched_b["tcode_b"]]
+
+    cols = [
+        "user_id",
+        "risk_id",
+        "risk_level",
+        "tcode_a",
+        "tcode_b",
+        "role_name_a",
+        "role_name_b",
+        "description",
+    ]
+    return df_conflicts[cols].drop_duplicates()
+
+
+def generate_summary(df_conflicts: pd.DataFrame) -> pd.DataFrame:
+    if df_conflicts.empty:
+        return pd.DataFrame(columns=["Metric", "Value"])
+
+    by_risk = df_conflicts["risk_level"].value_counts().reset_index()
+    by_risk.columns = ["Risk Level / Metric", "Count"]
+
+    total_conflicts = pd.DataFrame(
+        [{"Risk Level / Metric": "Total Conflicts", "Count": len(df_conflicts)}]
+    )
+    affected_users = pd.DataFrame(
+        [{
+            "Risk Level / Metric": "Affected Users Count",
+            "Count": df_conflicts["user_id"].nunique(),
+        }]
+    )
+
+    return pd.concat([total_conflicts, affected_users, by_risk], ignore_index=True)
