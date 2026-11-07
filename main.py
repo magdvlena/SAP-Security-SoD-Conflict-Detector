@@ -114,3 +114,12 @@ def generate_summary(df_conflicts: pd.DataFrame) -> pd.DataFrame:
     )
 
     return pd.concat([total_conflicts, affected_users, by_risk], ignore_index=True)
+
+df_summary = generate_summary(df_conflicts)
+
+    with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
+        df_summary.to_excel(writer, sheet_name="Summary", index=False)
+        df_roles.to_excel(writer, sheet_name="User Authorizations", index=False)
+        df_conflicts.to_excel(
+            writer, sheet_name="SoD Conflicts Report", index=False
+        )
