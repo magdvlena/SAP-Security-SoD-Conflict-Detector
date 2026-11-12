@@ -1,7 +1,20 @@
-notebooks/todo.ipynb
-# utput reports
+# Generated reports
 output/
-__pycache__
-.gitattributes
-notebooks/my_notes.ipynbnotebooks/my_notes.ipynb
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+
+# Personal notes
+notebooks/todo.ipynb
 notebooks/my_notes.ipynb
