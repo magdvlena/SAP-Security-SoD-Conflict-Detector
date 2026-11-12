@@ -77,15 +77,7 @@ pytest
 
 - The data is **fictional** and very small (3 rules, 7 rows). Some T-codes, such as `PAY01`, are made up for the example.
 - It only compares T-codes. Real SoD analysis in SAP also looks at authorization objects and their values.
-- File paths are fixed: run the script from the project folder.
-
-## Ideas for the future
-
-- command line options for the input and output files
-- more rules and a bigger sample dataset
-- tests for the CSV loaders
-- GitHub Actions that run the tests automatically
-
+  
 ## Project structure
 
 ```
