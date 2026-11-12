@@ -1,3 +1,4 @@
 notebooks/todo.ipynb
 # utput reports
 output/
+__pycache__
