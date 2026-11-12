@@ -72,8 +72,6 @@ T-codes are trimmed and converted to upper case when the files are loaded.
 ```bash
 pytest
 ```
-## Excel report 
-! [Report](C:\Users\xxmeg\Desktop\SAP\docs\report 1.png).
 
 ## Limitations
 
