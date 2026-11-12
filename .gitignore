@@ -4,3 +4,4 @@ output/
 __pycache__
 .gitattributes
 notebooks/my_notes.ipynbnotebooks/my_notes.ipynb
+notebooks/my_notes.ipynb
