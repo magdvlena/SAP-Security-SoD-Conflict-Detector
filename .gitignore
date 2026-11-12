@@ -3,3 +3,4 @@ notebooks/todo.ipynb
 output/
 __pycache__
 .gitattributes
+notebooks/my_notes.ipynb
