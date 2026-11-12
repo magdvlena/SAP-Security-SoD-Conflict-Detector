@@ -72,12 +72,14 @@ T-codes are trimmed and converted to upper case when the files are loaded.
 ```bash
 pytest
 ```
+## Excel report 
+! [Report](docs/report1.png).
 
 ## Limitations
 
 - The data is **fictional** and very small (3 rules, 7 rows). Some T-codes, such as `PAY01`, are made up for the example.
 - It only compares T-codes. Real SoD analysis in SAP also looks at authorization objects and their values.
-- 
+  
 ## Project structure
 
 ```
