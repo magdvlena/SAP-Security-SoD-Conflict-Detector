@@ -1,4 +1,6 @@
+![Tests](https://github.com/magdvlena/SAP-Security-SoD-Conflict-Detector/actions/workflows/tests.yml/badge.svg)
 # SAP Security SoD Conflict Detector
+
 
 A small Python project that checks which users have a risky combination of SAP transaction codes (T-codes) and writes the result to an Excel report.
 
