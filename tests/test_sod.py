@@ -61,3 +61,21 @@ def test_no_conflicts_when_roles_do_not_overlap():
 
     conflicts = detect_sod_conflicts(user_roles, sod_matrix)
     assert conflicts.empty
+
+def test_generate_summary_structure():
+    conflicts = pd.DataFrame([
+        {
+            "user_id": "USR01",
+            "risk_id": "RSK01",
+            "risk_level": "HIGH",
+            "tcode_a": "FB60",
+            "tcode_b": "F-53",
+            "role_name_a": "R1",
+            "role_name_b": "R2",
+            "description": "Test",
+        }
+    ])
+
+    summary = generate_summary(conflicts)
+    assert not summary.empty
+    assert "Total Conflicts" in summary["Risk Level / Metric"].values
