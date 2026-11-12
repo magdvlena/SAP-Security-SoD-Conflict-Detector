@@ -2,3 +2,4 @@ notebooks/todo.ipynb
 # utput reports
 output/
 __pycache__
+.gitattributes
