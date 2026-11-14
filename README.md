@@ -43,7 +43,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-The report is saved in the `output/` folder.
+The report is saved in the `output/` folder. The screenshots of output are shown on the bottom of the read me page:)
 
 ## Input files
 
@@ -87,3 +87,13 @@ sod_matrix.csv          sample risk rules
 user_roles.csv          sample user authorizations
 notebooks/              exploratory notebook used to prototype the logic
 ```
+### Report Preview
+
+**Executive Summary**
+![Executive Summary](docs/report_1.png)
+
+**Detailed Conflict Log**
+![Detailed Conflict Log](docs/report_2.png)
+
+**Terminal Output**
+![Terminal Output](docs/report_3.png)
