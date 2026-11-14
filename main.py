@@ -42,7 +42,7 @@ def load_user_roles(file_path: str = "user_roles.csv") -> pd.DataFrame:
 def detect_sod_conflicts(
     df_user_roles: pd.DataFrame, df_sod: pd.DataFrame
 ) -> pd.DataFrame:
-    # 1. Dopasowujemy transakcję A użytkownika z tcode_a z macierzy
+    # Matching user's from tcode_a transaction A from matrix.
     matched_a = pd.merge(
         df_user_roles,
         df_sod,
@@ -51,10 +51,10 @@ def detect_sod_conflicts(
         how="inner",
     )
 
-    # 2. Usunięcie zbędnej kolumny 'tcode', zapobiegające błędowi MergeError
+    # Removing unnecesary column "tcode", which prevents merge error.
     matched_a = matched_a.drop(columns=["tcode"])
 
-    # 3. Dopasowujemy transakcję B dla tego samego użytkownika z tcode_b z macierzy
+    # Matching transaction B to the same user from tcode_b from matrix. 
     matched_b = pd.merge(
         matched_a,
         df_user_roles,
