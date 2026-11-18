@@ -43,7 +43,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-The report is saved in the `output/` folder. The screenshots of output are shown on the bottom of the read me page:)
+See report preview below. 
 
 ## Input files
 
@@ -93,7 +93,7 @@ notebooks/              exploratory notebook used to prototype the logic
 ![Executive Summary](docs/report_1.png)
 
 **Detailed Conflict Log**
-![Detailed Conflict Log](docs/report_2.png)
+![User Authorisation](docs/report_2.png)
 
 **Terminal Output**
-![Terminal Output](docs/report_3.png)
+![SoD Conflicts Report](docs/report_3.png)
