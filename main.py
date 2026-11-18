@@ -81,7 +81,7 @@ def detect_sod_conflicts(
 
 def generate_summary(df_conflicts: pd.DataFrame) -> pd.DataFrame:
     if df_conflicts.empty:
-        return pd.DataFrame(columns=["Metric", "Value"])
+        return pd.DataFrame(columns=["Risk Level / Metric", "Count"])
 
     by_risk = df_conflicts["risk_level"].value_counts().reset_index()
     by_risk.columns = ["Risk Level / Metric", "Count"]
@@ -107,7 +107,7 @@ def main():
     df_conflicts = detect_sod_conflicts(df_roles, df_sod)
     df_summary = generate_summary(df_conflicts)
 
-    # Automatyczne utworzenie katalogu output
+    # Automatically create output directory if it doesn't exist
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
     output_file = output_dir / "sod_analysis_report.xlsx"
